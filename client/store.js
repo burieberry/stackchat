@@ -40,13 +40,13 @@ export function fetchMessages() {
   }
 }
 
-export function postMessage(content, channelId) {
+export function postMessage(message) {
   return function thunk(dispatch) {
-    return axios.post('/api/messages', { content, channelId })
+    return axios.post('/api/messages', message)
       .then(result => result.data)
-      .then(message => {
-        store.dispatch(receiveMessage(message));
-        socket.emit('new-message', message);
+      .then(newMessage => {
+        store.dispatch(receiveMessage(newMessage));
+        socket.emit('new-message', newMessage);
       });
   }
 }
