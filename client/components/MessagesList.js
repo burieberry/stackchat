@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import Message from './Message';
 import NewMessageEntry from './NewMessageEntry';
 import store, { gotMessagesFromServer, fetchMessages } from '../store';
