@@ -14,10 +14,7 @@ export default class MessagesList extends Component {
   componentDidMount () {
     axios.get('/api/messages')
       .then(res => res.data)
-      .then(messages => {
-        const action = gotMessagesFromServer(messages);
-        store.dispatch(action);
-      });
+      .then(messages => store.dispatch(gotMessagesFromServer(messages)));
 
     this.unsubscribe = store.subscribe(() => {
       this.setState(store.getState());
@@ -29,7 +26,6 @@ export default class MessagesList extends Component {
   }
 
   render () {
-
     const channelId = Number(this.props.match.params.channelId); // because it's a string "1", not a number!
     const messages = this.state.messages;
     const filteredMessages = messages.filter(message => message.channelId === channelId);

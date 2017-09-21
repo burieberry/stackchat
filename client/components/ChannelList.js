@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import store, { gotMessagesFromServer } from '../store';
+import store from '../store';
 
 const RANDOM_CHANNEL = '/channels/1';
 const GENERAL_CHANNEL = '/channels/2';
@@ -32,6 +32,7 @@ export default class ChannelList extends Component {
     });
 
     return (
+
       <ul>
         <li>
           <NavLink to={RANDOM_CHANNEL} activeClassName="active">
