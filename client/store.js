@@ -59,14 +59,6 @@ export function postMessage(message) {
   }
 }
 
-export function postName(name) {
-  return function thunk(dispatch) {
-    return axios.post('/api/messages', name)
-      .then(res => res.data)
-      .then(newName => dispatch(nameCreator(newName)));
-  }
-}
-
 // INITIAL STATE:
 const initialState = {
   messages: [],
