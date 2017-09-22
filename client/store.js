@@ -8,6 +8,7 @@ import socket from './socket';
 const GOT_MESSAGES_FROM_SERVER = 'GOT_MESSAGES_FROM_SERVER';
 const WRITE_MESSAGE = 'ADD_MESSAGE';
 const RECEIVE_MESSAGE = 'RECEIVE_MESSAGE';
+const NEW_NAME = 'NEW_NAME';
 
 // ACTION CREATORS:
 export function gotMessagesFromServer(messages) {
@@ -31,7 +32,14 @@ export function receiveMessage(message) {
   }
 }
 
-// thunk creator
+export function nameCreator(name) {
+  return {
+    type: NEW_NAME,
+    name
+  }
+}
+
+// thunk creators
 export function fetchMessages() {
   return function thunk(dispatch) {
     return axios.get('/api/messages')
@@ -45,16 +53,25 @@ export function postMessage(message) {
     return axios.post('/api/messages', message)
       .then(result => result.data)
       .then(newMessage => {
-        store.dispatch(receiveMessage(newMessage));
+        dispatch(receiveMessage(newMessage));
         socket.emit('new-message', newMessage);
       });
+  }
+}
+
+export function postName(name) {
+  return function thunk(dispatch) {
+    return axios.post('/api/messages', name)
+      .then(res => res.data)
+      .then(newName => dispatch(nameCreator(newName)));
   }
 }
 
 // INITIAL STATE:
 const initialState = {
   messages: [],
-  newEntry: ''
+  newEntry: '',
+  name: ''
 };
 
 // REDUCER:
@@ -66,6 +83,8 @@ function reducer(state = initialState, action) {
       return Object.assign({}, state, { newEntry: action.newEntry });
     case RECEIVE_MESSAGE:
       return Object.assign({}, state, { messages: state.messages.concat(action.message) });
+    case NEW_NAME:
+      return Object.assign({}, state, { name: action.name });
     default:
       return state;
   }
