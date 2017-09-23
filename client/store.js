@@ -11,7 +11,8 @@ const initialState = {
   messages: [],
   name: 'Reggie',
   newMessageEntry: '',
-  channels: []
+  channels: [],
+  newChannelEntry: ''
 };
 
 // ACTION TYPES
@@ -20,18 +21,20 @@ const GET_MESSAGE = 'GET_MESSAGE';
 const GET_MESSAGES = 'GET_MESSAGES';
 const WRITE_MESSAGE = 'WRITE_MESSAGE';
 const GET_CHANNELS = 'GET_CHANNELS';
+const ADD_CHANNEL = 'ADD_CHANNEL';
+const GET_CHANNEL = 'GET_CHANNEL';
 
 // ACTION CREATORS
 export function updateName (name) {
   return { type: UPDATE_NAME, name };
 }
 
-export function getMessage (message) {
-  return { type: GET_MESSAGE, message };
-}
-
 export function getMessages (messages) {
   return { type: GET_MESSAGES, messages };
+}
+
+export function getMessage (message) {
+  return { type: GET_MESSAGE, message };
 }
 
 export function writeMessage (content) {
@@ -39,12 +42,20 @@ export function writeMessage (content) {
 }
 
 export function getChannels(channels) {
-  return {type: GET_CHANNELS, channels }
+  return { type: GET_CHANNELS, channels }
+}
+
+export function getChannel(channel) {
+  return { type: GET_CHANNEL, channel }
+}
+
+export function addChannel(channelName) {
+  return { type: ADD_CHANNEL, channelName }
 }
 
 // THUNK CREATORS
 export function fetchMessages () {
-  return function thunk (dispatch) {
+  return function thunk(dispatch) {
     return axios.get('/api/messages')
       .then(res => res.data)
       .then(messages => dispatch(getMessages(messages)));
@@ -52,7 +63,7 @@ export function fetchMessages () {
 }
 
 export function postMessage (message) {
-  return function thunk (dispatch) {
+  return function thunk(dispatch) {
     return axios.post('/api/messages', message)
       .then(res => res.data)
       .then(newMessage => {
@@ -63,10 +74,21 @@ export function postMessage (message) {
 }
 
 export function fetchChannels() {
-  return function thunk (dispatch) {
+  return function thunk(dispatch) {
     return axios.get('/api/channels')
       .then(res => res.data)
       .then(channels => dispatch(getChannels(channels)));
+  }
+}
+
+export function postChannel(channel) {
+  return function thunk(dispatch) {
+    return axios.post('/api/channels', channel)
+      .then(res => res.data)
+      .then(newChannel => {
+        dispatch(getChannel(newChannel));
+        socket.emit('new-channel', newChannel);
+      });
   }
 }
 
@@ -113,6 +135,18 @@ function reducer (state = initialState, action) {
       return {
         ...state,
         channels: action.channels
+      }
+
+    case GET_CHANNEL:
+      return {
+        ...state,
+        channels: [...state.channels, action.channel]
+      }
+
+    case ADD_CHANNEL:
+      return {
+        ...state,
+        newChannelEntry: action.channelName
       }
 
     default:
