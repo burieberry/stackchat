@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import store from '../store';
 
 const ChannelList = (props) => {
   const { messages, channels } = props;
@@ -10,7 +9,7 @@ const ChannelList = (props) => {
       {
         channels.map(channel => {
           return (
-            <li>
+            <li key={ channel.id }>
               <NavLink to={ `/channels/${ channel.id }`} activeClassName="active">
                 <span># ${ channel.name }</span>
                 <span className="badge">{ messages.filter(message => message.channelId === channel.id).length }</span>
