@@ -5,7 +5,6 @@ import store from '../store';
 
 const ChannelList = (props) => {
   const { messages, channels } = props;
-
   return (
     <ul>
       {
@@ -28,9 +27,10 @@ const ChannelList = (props) => {
   );
 }
 
-const mapStateToProps = (store) => {
+const mapStateToProps = (state) => {
   return {
-
+    channels: state.channels,
+    messages: state.messages
   }
 };
 
