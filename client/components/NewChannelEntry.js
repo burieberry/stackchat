@@ -15,12 +15,12 @@ const NewChannelEntry = (props) => {
       </div>
     </form>
   );
-}
+};
 
 const mapStateToProps = (state) => {
   return {
     newChannelEntry: state.newChannelEntry
-  }
+  };
 };
 
 const mapDispatchToProps = (dispatch, ownprops) => {
@@ -34,8 +34,8 @@ const mapDispatchToProps = (dispatch, ownprops) => {
       dispatch(postChannel({ name }, ownprops.history));
       dispatch(addChannel(''));
     }
-  }
-}
+  };
+};
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(NewChannelEntry);
 export default Container;

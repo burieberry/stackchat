@@ -25,19 +25,19 @@ const ADD_CHANNEL = 'ADD_CHANNEL';
 const GET_CHANNEL = 'GET_CHANNEL';
 
 // ACTION CREATORS
-export function updateName (name) {
+export function updateName(name) {
   return { type: UPDATE_NAME, name };
 }
 
-export function getMessages (messages) {
+export function getMessages(messages) {
   return { type: GET_MESSAGES, messages };
 }
 
-export function getMessage (message) {
+export function getMessage(message) {
   return { type: GET_MESSAGE, message };
 }
 
-export function writeMessage (content) {
+export function writeMessage(content) {
   return { type: WRITE_MESSAGE, content };
 }
 
@@ -62,7 +62,7 @@ export function fetchMessages () {
   }
 }
 
-export function postMessage (message) {
+export function postMessage(message) {
   return function thunk(dispatch) {
     return axios.post('/api/messages', message)
       .then(res => res.data)
@@ -106,7 +106,7 @@ export function postChannel(channel, history) {
  * This is the same result we would have gotten if we had said:
  *    const obj2 = Object.assign({}, obj1, { b: 2 })
  */
-function reducer (state = initialState, action) {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_NAME:
       return {

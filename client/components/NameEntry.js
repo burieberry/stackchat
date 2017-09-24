@@ -2,26 +2,25 @@ import React, { Component } from 'react';
 import store, { updateName } from '../store';
 
 export default class NameEntry extends Component {
-
-  constructor () {
+  constructor() {
     super();
     this.state = store.getState();
     this.handleChange = this.handleChange.bind(this);
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.unsubscribe = store.subscribe(() => this.setState(store.getState()));
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.unsubscribe();
   }
 
-  handleChange (evt) {
+  handleChange(evt) {
     store.dispatch(updateName(evt.target.value));
   }
 
-  render () {
+  render() {
     return (
       <form className="form-inline">
         <label htmlFor="name">Your name:</label>

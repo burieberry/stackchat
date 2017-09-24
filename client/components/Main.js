@@ -7,7 +7,6 @@ import NewChannelEntry from './NewChannelEntry';
 import store, { fetchMessages, fetchChannels } from '../store';
 
 export default class Main extends Component {
-
   componentDidMount () {
     const messagesThunk = fetchMessages();
     const channelsThunk = fetchChannels();

@@ -24,13 +24,13 @@ const ChannelList = (props) => {
       </li>
     </ul>
   );
-}
+};
 
 const mapStateToProps = (state) => {
   return {
     channels: state.channels,
     messages: state.messages
-  }
+  };
 };
 
 const ChannelListContainer = withRouter(connect(mapStateToProps)(ChannelList));
