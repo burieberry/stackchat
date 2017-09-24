@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { addChannel, postChannel } from '../store';
 
-function NewChannelEntry (props) {
+const NewChannelEntry = (props) => {
   const { newChannelEntry, onChange, onSubmit } = props;
   return (
     <form onSubmit={ onSubmit }>
@@ -23,7 +23,7 @@ const mapStateToProps = (state) => {
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownprops) => {
   return {
     onChange(ev) {
       dispatch(addChannel(ev.target.value));
@@ -31,7 +31,7 @@ const mapDispatchToProps = (dispatch) => {
     onSubmit(ev) {
       ev.preventDefault();
       const name = ev.target.channelName.value;
-      dispatch(postChannel({ name }));
+      dispatch(postChannel({ name }, ownprops.history));
       dispatch(addChannel(''));
     }
   }

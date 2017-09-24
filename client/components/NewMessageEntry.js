@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import store, { postMessage, writeMessage } from '../store';
 
 export default class NewMessageEntry extends Component {
-
   constructor () {
     super();
     this.state = store.getState();
